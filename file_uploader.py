@@ -28,11 +28,12 @@ def upload_file(file_path):
     with FTP_TLS() as ftp:
         ftp.connect(ftp_host)
         ftp.login(ftp_user, ftp_password)
-        
+        ftp.prot_p()        
         logging.info(f"Hochladen von Datei: {file_path}")
         
         with open(file_path, 'rb') as file:
-            ftp.prot_p()
+            logging.info(f"Warte 20 Sekunden bis File fertig geschrieben")
+            time.sleep(20)
             ftp.storbinary(f'STOR {os.path.basename(file_path)}', file)
 
 def move_file(file_path):
